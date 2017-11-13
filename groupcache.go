@@ -315,6 +315,8 @@ func (g *Group) getFromPeer(ctx Context, peer ProtoGetter, key string) (ByteView
 	// conditionally populate hotCache.  For now just do it some
 	// percentage of the time.
 	if rand.Intn(10) == 0 {
+		// 如何处理hotcache呢?
+		// 手动定义？
 		g.populateCache(key, value, &g.hotCache)
 	}
 	return value, nil
@@ -336,6 +338,7 @@ func (g *Group) populateCache(key string, value ByteView, cache *cache) {
 	if g.cacheBytes <= 0 {
 		return
 	}
+	// 往cache中添加k/v
 	cache.add(key, value)
 
 	// Evict items from cache(s) if necessary.
